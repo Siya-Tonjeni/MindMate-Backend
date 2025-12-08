@@ -1,65 +1,59 @@
 datasource db {
   provider = "postgresql"
-  // No more "url" here
+  // url is moved to prisma.config.ts
 }
 
 generator client {
   provider = "prisma-client-js"
 }
 
-
 model User {
-id String @id @default(uuid())
-email String @unique
-password String
-name String?
-createdAt DateTime @default(now())
-refreshToken String? // store current refresh token hash (optional)
+  id           String    @id @default(uuid())
+  email        String    @unique
+  password     String
+  name         String?
+  createdAt    DateTime  @default(now())
+  refreshToken String?
 
-
-moods Mood[]
-journals Journal[]
-habits Habit[]
-goals Goal[]
+  moods    Mood[]
+  journals Journal[]
+  habits   Habit[]
+  goals    Goal[]
 }
-
 
 model Mood {
-id String @id @default(uuid())
-user User @relation(fields: [userId], references: [id])
-userId String
-rating Int // 1-10
-note String?
-createdAt DateTime @default(now())
+  id        String   @id @default(uuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  rating    Int
+  note      String?
+  createdAt DateTime @default(now())
 }
-
 
 model Journal {
-id String @id @default(uuid())
-user User @relation(fields: [userId], references: [id])
-userId String
-title String?
-content String
-createdAt DateTime @default(now())
+  id        String   @id @default(uuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  title     String?
+  content   String
+  createdAt DateTime @default(now())
 }
-
 
 model Habit {
-id String @id @default(uuid())
-user User @relation(fields: [userId], references: [id])
-userId String
-name String
-frequency String // e.g. "daily", "3_per_week"
-createdAt DateTime @default(now())
+  id         String   @id @default(uuid())
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String
+  name       String
+  frequency  String
+  createdAt  DateTime @default(now())
 }
 
-
 model Goal {
-id String @id @default(uuid())
-user User @relation(fields: [userId], references: [id])
-userId String
-title String
-description String?
-targetDate DateTime?
-createdAt DateTime @default(now())
+  id         String   @id @default(uuid())
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String
+  title      String
+  description String?
+  targetDate DateTime?
+  createdAt  DateTime @default(now())
 }
